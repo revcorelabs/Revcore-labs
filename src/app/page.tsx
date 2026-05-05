@@ -684,8 +684,7 @@ export default function Home() {
               </svg>
 
               <blockquote className="text-xl md:text-2xl font-medium text-white leading-relaxed mb-8 pt-4">
-                {/* PLACEHOLDER — reemplazar con testimonio real de Distribuidora Blue */}
-                "Antes no teníamos presencia online. Revcore nos armó la página en una semana y ahora los clientes nos encuentran solos."
+                "Logró darme una identidad digital con servicios automatizados y comunica a quien me visita la vigencia de nuestra propuesta. Una muy acertada selección de colores, tonos y términos del rubro la definen como accesible e invita a contactarme — pero sobre todo, respalda silenciosamente el trabajo que realizamos."
               </blockquote>
 
               <div className="flex items-center gap-4">
@@ -693,9 +692,8 @@ export default function Home() {
                   DB
                 </div>
                 <div>
-                  {/* PLACEHOLDER — reemplazar con nombre real */}
-                  <p className="font-bold text-white">Distribuidora Blue</p>
-                  <p className="text-sm text-[#64748B]">Mayorista de materiales de construcción — Uruguay</p>
+                  <p className="font-bold text-white">Carlos</p>
+                  <p className="text-sm text-[#64748B]">Distribuidora Blue — Mayorista de materiales de construcción</p>
                 </div>
                 <div className="ml-auto">
                   <span className="text-xs font-semibold px-3 py-1 rounded-full bg-[#22C55E]/10 text-[#22C55E] border border-[#22C55E]/20">
