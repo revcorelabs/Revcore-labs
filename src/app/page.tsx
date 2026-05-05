@@ -740,6 +740,59 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── FAQ SCHEMA ── */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: [
+              {
+                "@type": "Question",
+                name: "¿Cuánto cuesta una landing page o tienda online?",
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: "Las landing pages arrancan desde USD 150 y las tiendas online desde USD 400. Cada proyecto es distinto y presentamos un precio claro antes de empezar, sin letra chica.",
+                },
+              },
+              {
+                "@type": "Question",
+                name: "¿Cuánto tiempo tarda el desarrollo?",
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: "Trabajamos de forma eficiente para entregar resultados lo antes posible. Una landing page puede estar lista en menos de 7 días. Cuando entendemos tu necesidad, te damos un plazo concreto y lo cumplimos.",
+                },
+              },
+              {
+                "@type": "Question",
+                name: "¿Necesito saber de tecnología para trabajar con Revcore Labs?",
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: "Para nada. Nos encargamos de traducir lo que necesita tu negocio al lenguaje tecnológico. Vos nos explicás cómo trabajás y nosotros nos encargamos del resto.",
+                },
+              },
+              {
+                "@type": "Question",
+                name: "¿Qué pasa si no me gusta el resultado?",
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: "Trabajamos juntos durante todo el proceso para que el resultado sea lo que esperabas. Si algo no te convence, lo ajustamos hasta encontrar el punto que se adapta a tus necesidades.",
+                },
+              },
+              {
+                "@type": "Question",
+                name: "¿Ofrecen soporte después de entregar el trabajo?",
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: "Sí. No te quedás solo. Hacemos seguimiento, estamos disponibles para consultas y ofrecemos soporte post-entrega según lo que la solución requiera.",
+                },
+              },
+            ],
+          }),
+        }}
+      />
+
       {/* ── FOOTER ── */}
       <footer className="border-t border-white/5 py-10 px-6">
         <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">

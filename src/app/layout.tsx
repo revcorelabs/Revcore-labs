@@ -21,6 +21,49 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://revcorelabs.com"),
 };
 
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "Revcore Labs",
+  url: "https://revcorelabs.com",
+  logo: "https://revcorelabs.com/logo.png",
+  description:
+    "Agencia de digitalización y automatización para PyMEs en Uruguay. Landing pages, tiendas online y automatizaciones con IA.",
+  address: {
+    "@type": "PostalAddress",
+    addressCountry: "UY",
+  },
+  contactPoint: {
+    "@type": "ContactPoint",
+    contactType: "customer service",
+    availableLanguage: "Spanish",
+  },
+  sameAs: [],
+  offers: [
+    {
+      "@type": "Offer",
+      name: "Landing Pages",
+      description: "Diseño y desarrollo de landing pages profesionales",
+      priceCurrency: "USD",
+      price: "150",
+    },
+    {
+      "@type": "Offer",
+      name: "Tiendas Online",
+      description: "Desarrollo de tiendas Shopify completas",
+      priceCurrency: "USD",
+      price: "400",
+    },
+    {
+      "@type": "Offer",
+      name: "Automatizaciones",
+      description: "Automatización de procesos con IA y n8n",
+      priceCurrency: "USD",
+      price: "100",
+    },
+  ],
+};
+
 export default function RootLayout({
   children,
 }: {
@@ -28,6 +71,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+        />
+      </head>
       <body>{children}</body>
     </html>
   );
