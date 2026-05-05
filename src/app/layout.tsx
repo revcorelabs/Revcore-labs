@@ -19,6 +19,9 @@ export const metadata: Metadata = {
     description: "Hacemos el trabajo digital para que vos te enfoques en tu negocio.",
   },
   metadataBase: new URL("https://revcorelabs.com"),
+  verification: {
+    google: "Qg8n8WvzY6OfV83c3BAUctr9mTOkDtGRkMqlVIiYtRc",
+  },
 };
 
 const organizationSchema = {
