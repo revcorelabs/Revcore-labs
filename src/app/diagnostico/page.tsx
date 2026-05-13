@@ -10,6 +10,7 @@ type FormData = {
   nombre: string;
   negocio: string;
   rubro: string;
+  rubroOtro: string;
   tieneWeb: string;
   urlWeb: string;
   redes: string[];
@@ -57,6 +58,7 @@ export default function DiagnosticoPage() {
     nombre: "",
     negocio: "",
     rubro: "",
+    rubroOtro: "",
     tieneWeb: "",
     urlWeb: "",
     redes: [],
@@ -95,7 +97,7 @@ export default function DiagnosticoPage() {
   const redesConUsuario = form.redes.filter((r) => r !== "Ninguna");
 
   const canContinue = () => {
-    if (step === 1) return form.nombre.trim() && form.negocio.trim() && form.rubro;
+    if (step === 1) return form.nombre.trim() && form.negocio.trim() && form.rubro && (form.rubro !== "Otro" || form.rubroOtro.trim());
     if (step === 2) return form.tieneWeb && form.redes.length > 0;
     if (step === 3) return form.desafio && form.contacto.trim();
     return false;
@@ -103,11 +105,15 @@ export default function DiagnosticoPage() {
 
   const handleSubmit = async () => {
     setLoading(true);
+    const payload = {
+      ...form,
+      rubro: form.rubro === "Otro" ? form.rubroOtro : form.rubro,
+    };
     try {
       await fetch(N8N_WEBHOOK, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify(payload),
       });
     } catch {
       // Continuar aunque haya error de red — el lead igual ve la confirmación
@@ -215,6 +221,16 @@ export default function DiagnosticoPage() {
                             </button>
                           ))}
                         </div>
+                        {form.rubro === "Otro" && (
+                          <input
+                            type="text"
+                            placeholder="¿Cuál es tu rubro?"
+                            value={form.rubroOtro}
+                            onChange={(e) => update("rubroOtro", e.target.value)}
+                            autoFocus
+                            className="w-full bg-[#050A14] border border-[#7C3AED]/50 rounded-lg px-4 py-3 text-sm text-white placeholder-[#4A5568] focus:outline-none focus:border-[#7C3AED] transition-colors mt-1"
+                          />
+                        )}
                       </div>
                     </div>
                   </div>
