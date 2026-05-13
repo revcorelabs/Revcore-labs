@@ -1,0 +1,155 @@
+{
+  "name": "Revcore — Diagnóstico Lead Form",
+  "nodes": [
+    {
+      "id": "1",
+      "name": "Webhook - Formulario Diagnóstico",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [100, 300],
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "diagnostico-lead",
+        "responseMode": "responseNode",
+        "options": {
+          "allowedOrigins": "https://revcorelabs.com"
+        }
+      }
+    },
+    {
+      "id": "2",
+      "name": "Responder 200 OK",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [320, 300],
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={ \"success\": true }",
+        "options": {
+          "responseCode": 200,
+          "responseHeaders": {
+            "entries": [
+              { "name": "Access-Control-Allow-Origin", "value": "https://revcorelabs.com" },
+              { "name": "Access-Control-Allow-Headers", "value": "Content-Type" }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "3",
+      "name": "Google Sheets - Guardar Lead",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [540, 300],
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "REEMPLAZAR_CON_ID_DEL_SHEET",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Leads",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Fecha": "={{ $now.format('dd/MM/yyyy HH:mm') }}",
+            "Nombre": "={{ $('Webhook - Formulario Diagnóstico').item.json.body.nombre }}",
+            "Negocio": "={{ $('Webhook - Formulario Diagnóstico').item.json.body.negocio }}",
+            "Rubro": "={{ $('Webhook - Formulario Diagnóstico').item.json.body.rubro }}",
+            "Tiene Web": "={{ $('Webhook - Formulario Diagnóstico').item.json.body.tieneWeb === 'si' ? 'Sí' : 'No' }}",
+            "URL Web": "={{ $('Webhook - Formulario Diagnóstico').item.json.body.urlWeb || '—' }}",
+            "Redes Sociales": "={{ $('Webhook - Formulario Diagnóstico').item.json.body.redes.join(', ') }}",
+            "Usuarios Redes": "={{ JSON.stringify($('Webhook - Formulario Diagnóstico').item.json.body.redesUsuarios || {}) }}",
+            "Principal Desafío": "={{ $('Webhook - Formulario Diagnóstico').item.json.body.desafio }}",
+            "Contacto Lead": "={{ $('Webhook - Formulario Diagnóstico').item.json.body.contacto }}",
+            "Estado": "Pendiente diagnóstico"
+          }
+        },
+        "options": {}
+      },
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "REEMPLAZAR_CON_ID_CREDENCIAL",
+          "name": "Google Sheets"
+        }
+      }
+    },
+    {
+      "id": "4",
+      "name": "Gmail - Notificación a Tomás",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [760, 300],
+      "parameters": {
+        "sendTo": "tomasdorrego47@gmail.com",
+        "subject": "=🎯 Nuevo lead: {{ $('Webhook - Formulario Diagnóstico').item.json.body.negocio }} — Revcore Labs",
+        "emailType": "html",
+        "message": "=<div style=\"font-family: Arial, sans-serif; max-width: 620px; margin: 0 auto; background-color: #050A14; color: #E2E8F0; padding: 40px; border-radius: 12px;\">\n\n  <div style=\"margin-bottom: 28px; display: flex; align-items: center; gap: 12px;\">\n    <span style=\"background: #7C3AED; color: white; padding: 5px 14px; border-radius: 20px; font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;\">Nuevo Lead</span>\n    <span style=\"color: #4A5568; font-size: 13px;\">{{ $now.format('dd/MM/yyyy') }} — {{ $now.format('HH:mm') }}</span>\n  </div>\n\n  <h1 style=\"color: #FFFFFF; font-size: 26px; font-weight: 700; margin: 0 0 6px 0;\">{{ $('Webhook - Formulario Diagnóstico').item.json.body.nombre }}</h1>\n  <p style=\"color: #7C3AED; font-size: 16px; margin: 0 0 32px 0; font-weight: 600;\">{{ $('Webhook - Formulario Diagnóstico').item.json.body.negocio }}</p>\n\n  <table style=\"width: 100%; border-collapse: collapse; margin-bottom: 32px;\">\n    <tr style=\"border-bottom: 1px solid rgba(255,255,255,0.06);\">\n      <td style=\"padding: 12px 0; color: #94A3B8; font-size: 13px; width: 140px;\">Rubro</td>\n      <td style=\"padding: 12px 0; color: #E2E8F0; font-size: 14px;\">{{ $('Webhook - Formulario Diagnóstico').item.json.body.rubro }}</td>\n    </tr>\n    <tr style=\"border-bottom: 1px solid rgba(255,255,255,0.06);\">\n      <td style=\"padding: 12px 0; color: #94A3B8; font-size: 13px;\">Tiene web</td>\n      <td style=\"padding: 12px 0; color: #E2E8F0; font-size: 14px;\">{{ $('Webhook - Formulario Diagnóstico').item.json.body.tieneWeb === 'si' ? '✅ Sí' : '❌ No' }}{{ $('Webhook - Formulario Diagnóstico').item.json.body.urlWeb ? ' — ' + $('Webhook - Formulario Diagnóstico').item.json.body.urlWeb : '' }}</td>\n    </tr>\n    <tr style=\"border-bottom: 1px solid rgba(255,255,255,0.06);\">\n      <td style=\"padding: 12px 0; color: #94A3B8; font-size: 13px;\">Redes sociales</td>\n      <td style=\"padding: 12px 0; color: #E2E8F0; font-size: 14px;\">{{ $('Webhook - Formulario Diagnóstico').item.json.body.redes.join(', ') || 'Ninguna' }}</td>\n    </tr>\n    <tr style=\"border-bottom: 1px solid rgba(255,255,255,0.06);\">\n      <td style=\"padding: 12px 0; color: #94A3B8; font-size: 13px;\">Usuarios redes</td>\n      <td style=\"padding: 12px 0; color: #E2E8F0; font-size: 14px;\">{{ Object.entries($('Webhook - Formulario Diagnóstico').item.json.body.redesUsuarios || {}).map(([k,v]) => k + ': @' + v).join(' | ') || '—' }}</td>\n    </tr>\n    <tr style=\"border-bottom: 1px solid rgba(255,255,255,0.06);\">\n      <td style=\"padding: 12px 0; color: #94A3B8; font-size: 13px;\">Desafío principal</td>\n      <td style=\"padding: 12px 0; color: #E2E8F0; font-size: 14px; font-weight: 600;\">{{ $('Webhook - Formulario Diagnóstico').item.json.body.desafio }}</td>\n    </tr>\n    <tr>\n      <td style=\"padding: 12px 0; color: #94A3B8; font-size: 13px;\">Contacto</td>\n      <td style=\"padding: 12px 0; color: #00D4FF; font-size: 14px; font-weight: 700;\">{{ $('Webhook - Formulario Diagnóstico').item.json.body.contacto }}</td>\n    </tr>\n  </table>\n\n  <div style=\"background: rgba(124,58,237,0.1); border: 1px solid rgba(124,58,237,0.25); border-radius: 8px; padding: 16px 20px;\">\n    <p style=\"margin: 0; color: #9D5FFB; font-size: 13px; font-weight: 600;\">⏰ El lead recibe su email de confirmación en 1 minuto. Tenés 24hs para enviar el diagnóstico.</p>\n  </div>\n\n  <p style=\"margin-top: 32px; margin-bottom: 0; color: #4A5568; font-size: 12px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 20px;\">Revcore Labs — Sistema automático de leads</p>\n</div>",
+        "options": {}
+      },
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "REEMPLAZAR_CON_ID_CREDENCIAL",
+          "name": "Gmail"
+        }
+      }
+    },
+    {
+      "id": "5",
+      "name": "Esperar 1 Minuto",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [980, 300],
+      "parameters": {
+        "unit": "minutes",
+        "amount": 1
+      }
+    },
+    {
+      "id": "6",
+      "name": "Gmail - Confirmación al Lead",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [1200, 300],
+      "parameters": {
+        "sendTo": "={{ $('Webhook - Formulario Diagnóstico').item.json.body.contacto }}",
+        "subject": "Tu diagnóstico de presencia digital está en camino — Revcore Labs",
+        "emailType": "html",
+        "message": "=<div style=\"font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #050A14; color: #E2E8F0; border-radius: 12px; overflow: hidden;\">\n\n  <!-- Header -->\n  <div style=\"background: linear-gradient(135deg, #7C3AED 0%, #0D1627 100%); padding: 40px 40px 32px;\">\n    <p style=\"margin: 0 0 16px 0; color: rgba(255,255,255,0.6); font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase;\">Revcore Labs</p>\n    <h1 style=\"margin: 0; color: #FFFFFF; font-size: 28px; font-weight: 700; line-height: 1.2;\">Tu diagnóstico está<br>en camino, {{ $('Webhook - Formulario Diagnóstico').item.json.body.nombre.split(' ')[0] }}. ✅</h1>\n  </div>\n\n  <!-- Body -->\n  <div style=\"padding: 40px;\">\n    <p style=\"color: #94A3B8; font-size: 16px; line-height: 1.7; margin: 0 0 24px 0;\">Recibimos tu solicitud para <strong style=\"color: #FFFFFF;\">{{ $('Webhook - Formulario Diagnóstico').item.json.body.negocio }}</strong>. Nuestro equipo ya está analizando tu situación digital.</p>\n\n    <div style=\"background: rgba(124,58,237,0.08); border-left: 3px solid #7C3AED; padding: 20px 24px; border-radius: 0 8px 8px 0; margin-bottom: 32px;\">\n      <p style=\"margin: 0; color: #FFFFFF; font-size: 15px; font-weight: 600;\">⏱ En menos de 24 horas recibís tu análisis personalizado con:</p>\n      <ul style=\"margin: 12px 0 0 0; padding-left: 20px; color: #94A3B8; font-size: 14px; line-height: 1.8;\">\n        <li>Diagnóstico de tu presencia digital actual</li>\n        <li>Qué mejorar y por dónde empezar</li>\n        <li>Estimación de lo que podríamos hacer juntos</li>\n      </ul>\n    </div>\n\n    <p style=\"color: #94A3B8; font-size: 15px; line-height: 1.7; margin: 0 0 32px 0;\">Si tenés alguna consulta antes de recibir el diagnóstico, podés escribirnos directamente a este correo o contactarnos por WhatsApp.</p>\n\n    <!-- CTA -->\n    <div style=\"text-align: center; margin-bottom: 32px;\">\n      <a href=\"https://revcorelabs.com\" style=\"display: inline-block; background: linear-gradient(135deg, #7C3AED, #00D4FF); color: white; text-decoration: none; padding: 14px 32px; border-radius: 8px; font-weight: 700; font-size: 15px;\">Conocé más sobre Revcore Labs →</a>\n    </div>\n\n    <p style=\"color: #4A5568; font-size: 13px; line-height: 1.7; margin: 0;\">Mientras tanto, en <a href=\"https://revcorelabs.com\" style=\"color: #7C3AED;\">revcorelabs.com</a> podés ver los proyectos que ya entregamos y cómo trabajamos.</p>\n  </div>\n\n  <!-- Footer -->\n  <div style=\"padding: 24px 40px; border-top: 1px solid rgba(255,255,255,0.05);\">\n    <p style=\"margin: 0; color: #4A5568; font-size: 12px;\">Revcore Labs — Agencia de digitalización y automatización para PyMEs</p>\n    <p style=\"margin: 4px 0 0 0; color: #4A5568; font-size: 12px;\"><a href=\"https://revcorelabs.com\" style=\"color: #4A5568;\">revcorelabs.com</a></p>\n  </div>\n</div>",
+        "options": {}
+      },
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "REEMPLAZAR_CON_ID_CREDENCIAL",
+          "name": "Gmail"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Webhook - Formulario Diagnóstico": {
+      "main": [[{ "node": "Responder 200 OK", "type": "main", "index": 0 }]]
+    },
+    "Responder 200 OK": {
+      "main": [[{ "node": "Google Sheets - Guardar Lead", "type": "main", "index": 0 }]]
+    },
+    "Google Sheets - Guardar Lead": {
+      "main": [[{ "node": "Gmail - Notificación a Tomás", "type": "main", "index": 0 }]]
+    },
+    "Gmail - Notificación a Tomás": {
+      "main": [[{ "node": "Esperar 1 Minuto", "type": "main", "index": 0 }]]
+    },
+    "Esperar 1 Minuto": {
+      "main": [[{ "node": "Gmail - Confirmación al Lead", "type": "main", "index": 0 }]]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "America/Montevideo"
+  }
+}

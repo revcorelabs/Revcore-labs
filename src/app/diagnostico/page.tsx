@@ -4,7 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-const WA_NUMBER = "59894486143";
+const N8N_WEBHOOK = "https://n8n-production-aa393.up.railway.app/webhook/diagnostico-lead";
 
 type FormData = {
   nombre: string;
@@ -13,6 +13,7 @@ type FormData = {
   tieneWeb: string;
   urlWeb: string;
   redes: string[];
+  redesUsuarios: Record<string, string>;
   desafio: string;
   contacto: string;
 };
@@ -41,9 +42,17 @@ const DESAFIOS = [
 
 const REDES_OPTIONS = ["Instagram", "Facebook", "LinkedIn", "TikTok", "Ninguna"];
 
+const REDES_PLACEHOLDERS: Record<string, string> = {
+  Instagram: "@tunegocio",
+  Facebook: "facebook.com/tunegocio",
+  LinkedIn: "linkedin.com/company/...",
+  TikTok: "@tunegocio",
+};
+
 export default function DiagnosticoPage() {
   const [step, setStep] = useState(1);
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [form, setForm] = useState<FormData>({
     nombre: "",
     negocio: "",
@@ -51,27 +60,39 @@ export default function DiagnosticoPage() {
     tieneWeb: "",
     urlWeb: "",
     redes: [],
+    redesUsuarios: {},
     desafio: "",
     contacto: "",
   });
 
-  const update = (field: keyof FormData, value: string | string[]) => {
+  const update = (field: keyof FormData, value: string | string[] | Record<string, string>) => {
     setForm((prev) => ({ ...prev, [field]: value }));
   };
 
   const toggleRed = (red: string) => {
-    const current = form.redes;
     if (red === "Ninguna") {
       update("redes", ["Ninguna"]);
+      update("redesUsuarios", {});
       return;
     }
-    const filtered = current.filter((r) => r !== "Ninguna");
+    const filtered = form.redes.filter((r) => r !== "Ninguna");
+    const newRedes = filtered.includes(red)
+      ? filtered.filter((r) => r !== red)
+      : [...filtered, red];
+    update("redes", newRedes);
+    // Remove username if network was deselected
     if (filtered.includes(red)) {
-      update("redes", filtered.filter((r) => r !== red));
-    } else {
-      update("redes", [...filtered, red]);
+      const newUsuarios = { ...form.redesUsuarios };
+      delete newUsuarios[red];
+      update("redesUsuarios", newUsuarios);
     }
   };
+
+  const updateUsuario = (red: string, value: string) => {
+    update("redesUsuarios", { ...form.redesUsuarios, [red]: value });
+  };
+
+  const redesConUsuario = form.redes.filter((r) => r !== "Ninguna");
 
   const canContinue = () => {
     if (step === 1) return form.nombre.trim() && form.negocio.trim() && form.rubro;
@@ -80,25 +101,18 @@ export default function DiagnosticoPage() {
     return false;
   };
 
-  const handleSubmit = () => {
-    const redesText = form.redes.join(", ") || "Ninguna";
-    const webText = form.tieneWeb === "si" ? (form.urlWeb || "Sí, sin URL especificada") : "No tiene";
-
-    const mensaje = `Hola Revcore Labs! Quiero solicitar mi diagnóstico gratuito de presencia digital 🎯
-
-*Mis datos:*
-• Nombre: ${form.nombre}
-• Negocio: ${form.negocio}
-• Rubro: ${form.rubro}
-• Web: ${webText}
-• Redes sociales: ${redesText}
-• Mi principal desafío: ${form.desafio}
-• Contacto preferido: ${form.contacto}
-
-¡Quedo esperando el diagnóstico!`;
-
-    const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(mensaje)}`;
-    window.open(url, "_blank");
+  const handleSubmit = async () => {
+    setLoading(true);
+    try {
+      await fetch(N8N_WEBHOOK, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+    } catch {
+      // Continuar aunque haya error de red — el lead igual ve la confirmación
+    }
+    setLoading(false);
     setSubmitted(true);
   };
 
@@ -114,10 +128,7 @@ export default function DiagnosticoPage() {
               REVCORE <span className="text-[#00D4FF] font-light">LABS</span>
             </span>
           </Link>
-          <Link
-            href="/"
-            className="text-sm text-[#94A3B8] hover:text-white transition-colors"
-          >
+          <Link href="/" className="text-sm text-[#94A3B8] hover:text-white transition-colors">
             ← Volver al inicio
           </Link>
         </div>
@@ -155,9 +166,8 @@ export default function DiagnosticoPage() {
               {/* Progress */}
               <div className="flex items-center gap-2 mb-10">
                 {[1, 2, 3].map((s) => (
-                  <div key={s} className="flex items-center gap-2 flex-1">
-                    <div className={`flex-1 h-1 rounded-full transition-all duration-500 ${s <= step ? "bg-[#7C3AED]" : "bg-white/10"}`} />
-                  </div>
+                  <div key={s} className="flex-1 h-1 rounded-full transition-all duration-500"
+                    style={{ background: s <= step ? "#7C3AED" : "rgba(255,255,255,0.08)" }} />
                 ))}
                 <span className="text-xs text-[#94A3B8] ml-2 whitespace-nowrap">{step} de 3</span>
               </div>
@@ -165,12 +175,11 @@ export default function DiagnosticoPage() {
               {/* Step 1 */}
               {step === 1 && (
                 <div className="space-y-5">
-                  <div className="bg-[#0D1627]/60 border border-white/5 rounded-xl p-2">
-                    <p className="text-xs text-[#7C3AED] font-semibold uppercase tracking-wider px-3 pt-2 mb-3">Tu negocio</p>
-
-                    <div className="space-y-3 px-1">
+                  <div className="bg-[#0D1627]/60 border border-white/5 rounded-xl p-4">
+                    <p className="text-xs text-[#7C3AED] font-semibold uppercase tracking-wider mb-4">Tu negocio</p>
+                    <div className="space-y-4">
                       <div>
-                        <label className="block text-sm text-[#94A3B8] mb-1.5 px-2">Tu nombre</label>
+                        <label className="block text-sm text-[#94A3B8] mb-1.5">Tu nombre</label>
                         <input
                           type="text"
                           placeholder="Ej: Carlos García"
@@ -180,7 +189,7 @@ export default function DiagnosticoPage() {
                         />
                       </div>
                       <div>
-                        <label className="block text-sm text-[#94A3B8] mb-1.5 px-2">Nombre del negocio</label>
+                        <label className="block text-sm text-[#94A3B8] mb-1.5">Nombre del negocio</label>
                         <input
                           type="text"
                           placeholder="Ej: Distribuidora García"
@@ -190,8 +199,8 @@ export default function DiagnosticoPage() {
                         />
                       </div>
                       <div>
-                        <label className="block text-sm text-[#94A3B8] mb-1.5 px-2">Rubro</label>
-                        <div className="grid grid-cols-2 gap-2 p-1">
+                        <label className="block text-sm text-[#94A3B8] mb-2">Rubro</label>
+                        <div className="grid grid-cols-2 gap-2">
                           {RUBROS.map((r) => (
                             <button
                               key={r}
@@ -209,7 +218,6 @@ export default function DiagnosticoPage() {
                       </div>
                     </div>
                   </div>
-
                   <button
                     onClick={() => setStep(2)}
                     disabled={!canContinue()}
@@ -223,12 +231,11 @@ export default function DiagnosticoPage() {
               {/* Step 2 */}
               {step === 2 && (
                 <div className="space-y-5">
-                  <div className="bg-[#0D1627]/60 border border-white/5 rounded-xl p-2">
-                    <p className="text-xs text-[#7C3AED] font-semibold uppercase tracking-wider px-3 pt-2 mb-3">Presencia actual</p>
-
-                    <div className="space-y-4 px-1">
+                  <div className="bg-[#0D1627]/60 border border-white/5 rounded-xl p-4">
+                    <p className="text-xs text-[#7C3AED] font-semibold uppercase tracking-wider mb-4">Presencia actual</p>
+                    <div className="space-y-5">
                       <div>
-                        <label className="block text-sm text-[#94A3B8] mb-2 px-2">¿Tu negocio tiene página web?</label>
+                        <label className="block text-sm text-[#94A3B8] mb-2">¿Tu negocio tiene página web?</label>
                         <div className="grid grid-cols-2 gap-2">
                           {["si", "no"].map((op) => (
                             <button
@@ -248,7 +255,7 @@ export default function DiagnosticoPage() {
 
                       {form.tieneWeb === "si" && (
                         <div>
-                          <label className="block text-sm text-[#94A3B8] mb-1.5 px-2">URL de tu web (opcional)</label>
+                          <label className="block text-sm text-[#94A3B8] mb-1.5">URL de tu web (opcional)</label>
                           <input
                             type="url"
                             placeholder="https://tunegocio.com"
@@ -260,8 +267,8 @@ export default function DiagnosticoPage() {
                       )}
 
                       <div>
-                        <label className="block text-sm text-[#94A3B8] mb-2 px-2">¿En qué redes estás presente?</label>
-                        <div className="grid grid-cols-3 gap-2">
+                        <label className="block text-sm text-[#94A3B8] mb-2">¿En qué redes estás presente?</label>
+                        <div className="grid grid-cols-3 gap-2 mb-4">
                           {REDES_OPTIONS.map((red) => (
                             <button
                               key={red}
@@ -276,15 +283,31 @@ export default function DiagnosticoPage() {
                             </button>
                           ))}
                         </div>
+
+                        {/* Username fields — appear per selected network */}
+                        {redesConUsuario.length > 0 && (
+                          <div className="space-y-3 pt-2 border-t border-white/5">
+                            <p className="text-xs text-[#94A3B8] pt-1">¿Cuál es tu usuario en cada red?</p>
+                            {redesConUsuario.map((red) => (
+                              <div key={red} className="flex items-center gap-3">
+                                <span className="text-sm text-[#00D4FF] w-20 flex-shrink-0">{red}</span>
+                                <input
+                                  type="text"
+                                  placeholder={REDES_PLACEHOLDERS[red] || "@usuario"}
+                                  value={form.redesUsuarios[red] || ""}
+                                  onChange={(e) => updateUsuario(red, e.target.value)}
+                                  className="flex-1 bg-[#050A14] border border-white/10 rounded-lg px-3 py-2 text-sm text-white placeholder-[#4A5568] focus:outline-none focus:border-[#00D4FF]/50 transition-colors"
+                                />
+                              </div>
+                            ))}
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>
 
                   <div className="flex gap-3">
-                    <button
-                      onClick={() => setStep(1)}
-                      className="px-6 py-4 border border-white/10 rounded-xl text-[#94A3B8] hover:text-white hover:border-white/20 transition-all text-sm"
-                    >
+                    <button onClick={() => setStep(1)} className="px-6 py-4 border border-white/10 rounded-xl text-[#94A3B8] hover:text-white hover:border-white/20 transition-all text-sm">
                       ← Atrás
                     </button>
                     <button
@@ -301,12 +324,11 @@ export default function DiagnosticoPage() {
               {/* Step 3 */}
               {step === 3 && (
                 <div className="space-y-5">
-                  <div className="bg-[#0D1627]/60 border border-white/5 rounded-xl p-2">
-                    <p className="text-xs text-[#7C3AED] font-semibold uppercase tracking-wider px-3 pt-2 mb-3">Tu situación</p>
-
-                    <div className="space-y-4 px-1">
+                  <div className="bg-[#0D1627]/60 border border-white/5 rounded-xl p-4">
+                    <p className="text-xs text-[#7C3AED] font-semibold uppercase tracking-wider mb-4">Tu situación</p>
+                    <div className="space-y-4">
                       <div>
-                        <label className="block text-sm text-[#94A3B8] mb-2 px-2">¿Cuál es tu principal desafío hoy?</label>
+                        <label className="block text-sm text-[#94A3B8] mb-2">¿Cuál es tu principal desafío hoy?</label>
                         <div className="space-y-2">
                           {DESAFIOS.map((d) => (
                             <button
@@ -325,13 +347,13 @@ export default function DiagnosticoPage() {
                       </div>
 
                       <div>
-                        <label className="block text-sm text-[#94A3B8] mb-1.5 px-2">
+                        <label className="block text-sm text-[#94A3B8] mb-1.5">
                           ¿A dónde te enviamos el diagnóstico?
-                          <span className="text-[#4A5568] ml-1">(WhatsApp o email)</span>
+                          <span className="text-[#4A5568] ml-1">(email)</span>
                         </label>
                         <input
-                          type="text"
-                          placeholder="Ej: +598 99 000 000 o tu@email.com"
+                          type="email"
+                          placeholder="tu@email.com"
                           value={form.contacto}
                           onChange={(e) => update("contacto", e.target.value)}
                           className="w-full bg-[#050A14] border border-white/10 rounded-lg px-4 py-3 text-sm text-white placeholder-[#4A5568] focus:outline-none focus:border-[#7C3AED]/60 transition-colors"
@@ -341,49 +363,41 @@ export default function DiagnosticoPage() {
                   </div>
 
                   <div className="flex gap-3">
-                    <button
-                      onClick={() => setStep(2)}
-                      className="px-6 py-4 border border-white/10 rounded-xl text-[#94A3B8] hover:text-white hover:border-white/20 transition-all text-sm"
-                    >
+                    <button onClick={() => setStep(2)} className="px-6 py-4 border border-white/10 rounded-xl text-[#94A3B8] hover:text-white hover:border-white/20 transition-all text-sm">
                       ← Atrás
                     </button>
                     <button
                       onClick={handleSubmit}
-                      disabled={!canContinue()}
+                      disabled={!canContinue() || loading}
                       className="flex-1 bg-gradient-to-r from-[#7C3AED] to-[#00D4FF] hover:opacity-90 disabled:opacity-30 disabled:cursor-not-allowed text-white font-semibold py-4 rounded-xl transition-all hover:shadow-lg hover:shadow-violet-500/20"
                     >
-                      Quiero mi diagnóstico gratis →
+                      {loading ? "Enviando..." : "Quiero mi diagnóstico gratis →"}
                     </button>
                   </div>
 
                   <p className="text-center text-xs text-[#4A5568]">
-                    Al enviar, abriremos WhatsApp con tu solicitud. Tu info es solo para el diagnóstico.
+                    Tu información es confidencial y solo se usa para preparar tu diagnóstico.
                   </p>
                 </div>
               )}
             </>
           ) : (
-            /* Success state */
+            /* Success */
             <div className="text-center py-16">
-              <div className="w-20 h-20 rounded-full bg-[#7C3AED]/15 border border-[#7C3AED]/30 flex items-center justify-content center mx-auto mb-8 flex items-center justify-center">
+              <div className="w-20 h-20 rounded-full bg-[#7C3AED]/15 border border-[#7C3AED]/30 flex items-center justify-center mx-auto mb-8">
                 <span className="text-4xl">✓</span>
               </div>
-              <h2
-                className="text-3xl font-extrabold mb-4"
-                style={{ fontFamily: "'Space Grotesk', sans-serif" }}
-              >
+              <h2 className="text-3xl font-extrabold mb-4" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
                 ¡Listo, <span className="gradient-text">{form.nombre.split(" ")[0]}!</span>
               </h2>
               <p className="text-[#94A3B8] text-lg mb-2">
                 Recibimos tu solicitud para <strong className="text-white">{form.negocio}</strong>.
               </p>
-              <p className="text-[#94A3B8] mb-10">
-                En menos de 24 horas te enviamos tu diagnóstico personalizado.
+              <p className="text-[#94A3B8] mb-3">
+                En menos de 24 horas te enviamos tu diagnóstico personalizado a <strong className="text-white">{form.contacto}</strong>.
               </p>
-              <Link
-                href="/"
-                className="inline-flex items-center gap-2 text-sm text-[#7C3AED] hover:text-[#9D5FFB] transition-colors"
-              >
+              <p className="text-[#4A5568] text-sm mb-10">Revisá también tu carpeta de spam por las dudas.</p>
+              <Link href="/" className="inline-flex items-center gap-2 text-sm text-[#7C3AED] hover:text-[#9D5FFB] transition-colors">
                 ← Volver al inicio
               </Link>
             </div>
@@ -404,7 +418,6 @@ export default function DiagnosticoPage() {
               ))}
             </div>
           )}
-
         </div>
       </div>
     </main>
