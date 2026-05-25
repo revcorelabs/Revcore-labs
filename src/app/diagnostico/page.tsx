@@ -4,7 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-const N8N_WEBHOOK = "https://n8n-production-aa393.up.railway.app/webhook/diagnostico-lead";
+const N8N_WEBHOOK = "https://n8n.revcorelabs.com/webhook/diagnostico-lead";
 
 type FormData = {
   nombre: string;
