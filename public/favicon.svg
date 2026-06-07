@@ -1,0 +1,24 @@
+<svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+  <rect width="60" height="60" fill="#09090B"/>
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#B45309"/>
+      <stop offset="100%" stop-color="#F59E0B"/>
+    </linearGradient>
+  </defs>
+  <polygon points="30,8 49.05,19 49.05,41 30,52 10.95,41 10.95,19" fill="none" stroke="url(#g)" stroke-width="2"/>
+  <line x1="30" y1="30" x2="30" y2="8" stroke="#D97706" stroke-width="1" opacity="0.25"/>
+  <line x1="30" y1="30" x2="49.05" y2="19" stroke="#D97706" stroke-width="1" opacity="0.25"/>
+  <line x1="30" y1="30" x2="49.05" y2="41" stroke="#D97706" stroke-width="1" opacity="0.25"/>
+  <line x1="30" y1="30" x2="30" y2="52" stroke="#D97706" stroke-width="1" opacity="0.25"/>
+  <line x1="30" y1="30" x2="10.95" y2="41" stroke="#D97706" stroke-width="1" opacity="0.25"/>
+  <line x1="30" y1="30" x2="10.95" y2="19" stroke="#D97706" stroke-width="1" opacity="0.25"/>
+  <circle cx="30" cy="8" r="2.8" fill="#B45309"/>
+  <circle cx="49.05" cy="19" r="2.2" fill="#D97706" opacity="0.8"/>
+  <circle cx="49.05" cy="41" r="2.2" fill="#D97706" opacity="0.8"/>
+  <circle cx="30" cy="52" r="2.8" fill="#F59E0B"/>
+  <circle cx="10.95" cy="41" r="2.2" fill="#D97706" opacity="0.8"/>
+  <circle cx="10.95" cy="19" r="2.2" fill="#D97706" opacity="0.8"/>
+  <circle cx="30" cy="30" r="6" fill="url(#g)"/>
+  <circle cx="30" cy="30" r="2.8" fill="#09090B"/>
+</svg>
