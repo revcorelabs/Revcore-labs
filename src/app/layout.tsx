@@ -3,7 +3,14 @@ import Script from "next/script";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  icons: { icon: "/favicon.svg", shortcut: "/favicon.svg" },
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/favicon.svg", type: "image/svg+xml" },
+    ],
+    shortcut: "/favicon.ico",
+    apple: "/favicon.svg",
+  },
   title: "Revcore Labs — Digitalización para negocios reales",
   description: "Hacemos el trabajo digital para que vos te enfoques en tu negocio. Landing pages, tiendas online y automatizaciones para PyMEs en Uruguay.",
   keywords: ["digitalización", "automatización", "landing page", "tienda online", "Shopify", "Uruguay", "PyMEs", "agencia digital"],
