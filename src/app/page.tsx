@@ -2,6 +2,8 @@ import ScrollReveal from "@/components/ScrollReveal";
 import NavbarScroll from "@/components/NavbarScroll";
 import WhatsAppDemo from "@/components/WhatsAppDemo";
 import ContactForm from "@/components/ContactForm";
+import ScrollRevealText from "@/components/ScrollRevealText";
+import N8nFlow from "@/components/N8nFlow";
 
 const EMAIL = "mailto:revcorelabs@gmail.com";
 
@@ -45,7 +47,7 @@ export default function Home() {
               <LogoIcon width={30} height={30} id="nav" />
               <div className="nav-logo-divider" />
               <div className="nav-logo-text">
-                <div className="nav-logo-wordmark"><span style={{color:"var(--amber)",fontWeight:"inherit",letterSpacing:"inherit"}}>R</span>EVCORE <span style={{color:"var(--amber)",fontWeight:"inherit",letterSpacing:"inherit"}}>L</span>ABS</div>
+                <div className="nav-logo-wordmark">REVCORE <span style={{color:"var(--amber)",fontWeight:"inherit",letterSpacing:"inherit"}}>LABS</span></div>
                 <div className="nav-logo-tagline">Digitalización · Automatización</div>
               </div>
             </a>
@@ -69,10 +71,13 @@ export default function Home() {
           <div className="hero-grid">
             {/* Left */}
             <div>
-              <h1 className="hero-h1">
-                <span className="h1-plain">Hacemos el trabajo digital</span>
-                <em>para que vos te enfoques en tu negocio.</em>
-              </h1>
+              <ScrollRevealText
+                className="hero-h1"
+                segments={[
+                  { text: "Hacemos el trabajo digital" },
+                  { text: "para que vos te enfoques en tu negocio.", amber: true },
+                ]}
+              />
               <p className="hero-sub">
                 Tu negocio ya funciona. Lo que falta es que internet trabaje para vos. Páginas, tiendas y automatizaciones para empresas que quieren crecer.
               </p>
@@ -167,7 +172,7 @@ export default function Home() {
             <ScrollReveal direction="right">
               <div className="section-label">diferencial</div>
               <h2 style={{ fontSize: "clamp(26px,3.5vw,42px)", fontWeight: 700, letterSpacing: "-.02em", marginBottom: 20, lineHeight: 1.15 }}>
-                La mayoría de las agencias tech hablan de frameworks y servidores. Nosotros hablamos de <strong style={{ color: "#FAFAF9" }}>tu modelo de negocio, tus costos reales y cómo vas a facturar más</strong>.
+                Muchas agencias llegan con soluciones antes de entender el problema. Nosotros hablamos de <strong style={{ color: "#FAFAF9" }}>cómo funciona tu negocio — y buscamos los puntos donde la tecnología puede hacerlo más eficiente</strong>.
               </h2>
               <p style={{ fontSize: 16, color: "var(--text-2)", lineHeight: 1.7, marginBottom: 20 }}>
                 Entendemos <strong style={{ color: "var(--amber)", fontWeight: 700 }}>cómo funciona tu empresa</strong> — y también sabemos construir la solución digital. Eso es lo que nos hace distintos.
@@ -241,45 +246,21 @@ export default function Home() {
             <ScrollReveal direction="left">
               <div className="section-label">automatización</div>
               <h2 style={{ fontSize: "clamp(26px,3.5vw,42px)", fontWeight: 700, letterSpacing: "-.02em", marginBottom: 20, lineHeight: 1.15 }}>
-                Cuanto más crece tu negocio, más tiempo perdés en tareas que podría hacer una máquina.
+                Un contacto llega a tu web. Lo que pasa después, lo hace el sistema solo.
               </h2>
               <p style={{ fontSize: 16, color: "var(--text-2)", lineHeight: 1.7, marginBottom: 16 }}>
-                Contestar el mismo mensaje veinte veces. Copiar datos de un formulario a una planilla. Mandar el mismo mail de confirmación una y otra vez. Eso no es trabajar — es sobrevivir.
+                En menos de un segundo el flujo ya corrió: el dato quedó guardado, te llegó una notificación, y un minuto después el cliente recibió su confirmación. Sin que tocaras nada.
               </p>
               <p style={{ fontSize: 16, color: "var(--text-2)", lineHeight: 1.7, marginBottom: 32 }}>
-                <strong style={{ color: "var(--text)" }}>Automatizar es simple:</strong> conectamos tus herramientas para que hagan ese trabajo solas. Vos te liberás. Tu negocio sigue funcionando.
+                <strong style={{ color: "var(--text)" }}>Eso es automatizar:</strong> conectamos tus herramientas para que el trabajo suceda solo. Vos te liberás, tu negocio sigue funcionando.
               </p>
               <a href={EMAIL} className="btn btn-ghost">
-                Quiero automatizar mi negocio
+                Quiero esto para mi negocio
                 <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
               </a>
             </ScrollReveal>
             <ScrollReveal direction="right">
-              <div className="flow-panel">
-                <div className="term-chrome">
-                  <span className="term-dot term-dot-r" /><span className="term-dot term-dot-y" /><span className="term-dot term-dot-g" />
-                  <span className="term-title">automatización activa</span>
-                </div>
-                {[
-                  { icon: "📋", bg: "rgba(96,165,250,.12)", color: "#60A5FA", label: "Formulario de contacto", status: "● trigger", cls: "flow-status-live" },
-                  { connector: "└─▶" },
-                  { icon: "📊", bg: "rgba(134,239,172,.12)", color: "#86EFAC", label: "Google Sheets — registro", status: "✓ ok", cls: "flow-status-ok" },
-                  { connector: "└─▶" },
-                  { icon: "📧", bg: "rgba(217,119,6,.12)", color: "#D97706", label: "Gmail — respuesta automática", status: "✓ ok", cls: "flow-status-ok" },
-                  { connector: "└─▶" },
-                  { icon: "💬", bg: "rgba(37,211,102,.12)", color: "#25D366", label: "WhatsApp — notificación", status: "● live", cls: "flow-status-live" },
-                ].map((row, i) =>
-                  "connector" in row ? (
-                    <div key={i} className="flow-connector">{row.connector}</div>
-                  ) : (
-                    <div key={i} className="flow-item">
-                      <div className="flow-icon" style={{ background: row.bg, color: row.color }}>{row.icon}</div>
-                      <span className="flow-label">{row.label}</span>
-                      <span className={`flow-status ${row.cls}`}>{row.status}</span>
-                    </div>
-                  )
-                )}
-              </div>
+              <N8nFlow />
             </ScrollReveal>
           </div>
         </div>
@@ -466,7 +447,7 @@ export default function Home() {
             <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
               <LogoIcon width={22} height={22} id="footer" />
               <span style={{ fontFamily: "'Space Grotesk',sans-serif", fontSize: 13, fontWeight: 800, letterSpacing: ".12em", color: "var(--text-3)" }}>
-                <span style={{ color: "var(--amber)" }}>R</span>EVCORE <span style={{ color: "var(--amber)" }}>L</span>ABS
+                REVCORE <span style={{ color: "var(--amber)" }}>LABS</span>
               </span>
             </div>
             <span className="footer-copy">© 2026 Revcore Labs — Uruguay</span>

@@ -185,13 +185,6 @@ img { display: block; max-width: 100%; }
 }
 .hero-h1 .h1-plain {
   display: block;
-  animation: titleBlurIn 700ms var(--ease-out) 80ms both;
-}
-.hero-h1 em {
-  display: block;
-  font-style: normal;
-  color: var(--amber);
-  animation: titleBlurIn 700ms var(--ease-out) 220ms both, amberGlow 3.5s ease-in-out 1.4s infinite;
 }
 
 .hero-sub {
@@ -489,6 +482,113 @@ details[open] summary::after { transform: rotate(45deg); }
 }
 .cta-final h2 { font-size: clamp(28px, 4vw, 48px); font-weight: 800; letter-spacing: -.02em; margin-bottom: 16px; }
 .cta-final p { font-size: 17px; color: var(--text-2); max-width: 480px; margin: 0 auto 40px; line-height: 1.7; }
+
+/* ── N8N FLOW ── */
+.n8n-exec-badge {
+  margin-left: auto; font-size: 11px; font-weight: 600; letter-spacing: .04em;
+  color: var(--text-3); transition: color .3s;
+}
+.n8n-exec-running { color: var(--amber) !important; }
+.n8n-exec-success { color: var(--green) !important; }
+
+/* Panel */
+.nf-panel { border: 1px solid var(--border); border-radius: 16px; background: var(--bg-2); overflow: hidden; }
+.nf-canvas { padding: 24px 20px 28px; display: flex; flex-direction: column; align-items: center; gap: 0; }
+
+/* Rows */
+.nf-row { display: flex; align-items: center; gap: 0; }
+
+/* Node block */
+.nf-node {
+  display: flex; flex-direction: column; align-items: center; gap: 0;
+  position: relative;
+}
+.nf-trigger {
+  position: absolute; top: -6px; left: -6px; z-index: 2;
+  width: 14px; height: 14px; border-radius: 4px;
+  background: rgba(217,119,6,.2); border: 1px solid rgba(217,119,6,.4);
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* Square icon */
+.nf-sq {
+  width: 52px; height: 52px; border-radius: 12px;
+  background: #1C1C20; border: 1.5px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  position: relative; transition: border-color .25s, box-shadow .25s;
+  flex-shrink: 0;
+}
+.nf-active .nf-sq {
+  border-color: var(--amber);
+  box-shadow: 0 0 0 1px rgba(217,119,6,.15), 0 0 18px rgba(217,119,6,.2);
+}
+.nf-done .nf-sq { border-color: rgba(34,197,94,.45); }
+.nf-sq-pulse {
+  position: absolute; inset: -4px; border-radius: 15px;
+  border: 1.5px solid var(--amber); opacity: .7;
+  animation: nfPulse .9s ease-in-out infinite;
+}
+@keyframes nfPulse { 0%,100%{opacity:.4;transform:scale(1)} 50%{opacity:.9;transform:scale(1.05)} }
+
+/* Connection ports (left/right dots on node) */
+.nf-port {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--bg-3); border: 1.5px solid var(--border);
+  transition: border-color .25s, background .25s; flex-shrink: 0;
+}
+.nf-port-in  { margin-bottom: -4px; z-index: 1; }
+.nf-port-out { margin-top: -4px; z-index: 1; }
+.nf-port-active { border-color: var(--amber) !important; background: rgba(217,119,6,.3) !important; }
+.nf-port-done   { border-color: rgba(34,197,94,.6) !important; background: rgba(34,197,94,.15) !important; }
+
+/* Labels below the square */
+.nf-label { display: flex; flex-direction: column; align-items: center; margin-top: 8px; gap: 2px; min-width: 80px; max-width: 90px; }
+.nf-name  { font-size: 11px; font-weight: 600; color: var(--text); text-align: center; line-height: 1.3; }
+.nf-sub   { font-size: 9.5px; color: var(--text-3); font-family: monospace; text-align: center; }
+.nf-ok      { font-size: 9px; font-weight: 700; color: var(--green); margin-top: 2px; }
+.nf-running { display: inline-flex; gap: 2px; align-items: center; margin-top: 3px; }
+.nf-dp { width: 4px; height: 4px; border-radius: 50%; background: var(--amber); animation: nfBlink .7s ease-in-out infinite; }
+@keyframes nfBlink { 0%,100%{opacity:.15} 50%{opacity:1} }
+
+/* Horizontal connector */
+.nf-hconn {
+  display: flex; align-items: center; position: relative;
+  width: 52px; flex-shrink: 0; margin-bottom: 38px; /* offset down to align with sq center */
+}
+.nf-hconn-line {
+  flex: 1; height: 1.5px; background: var(--border); transition: background .3s; position: relative;
+}
+.nf-hconn-done .nf-hconn-line { background: rgba(34,197,94,.4); }
+.nf-arrow { font-size: 8px; color: var(--border); line-height: 1; margin-left: -1px; }
+.nf-hconn-done .nf-arrow { color: rgba(34,197,94,.5); }
+.nf-hconn-label {
+  position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+  font-size: 9px; color: var(--text-3); white-space: nowrap; font-family: monospace;
+}
+.nf-hconn-dot {
+  position: absolute; top: 50%; left: 0; transform: translateY(-50%);
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--amber); box-shadow: 0 0 7px var(--amber);
+  animation: nfHTravel 380ms linear forwards;
+}
+@keyframes nfHTravel { from{left:0;opacity:1} to{left:calc(100% - 7px);opacity:.4} }
+
+/* L-connector between rows */
+.nf-lconn {
+  width: 100%; height: 36px; position: relative; margin: 4px 0;
+}
+.nf-lconn-line {
+  position: absolute; right: calc(50% - 26px - 52px/2); top: 0;
+  width: 1.5px; height: 100%; background: var(--border); transition: background .3s;
+}
+.nf-lconn-done .nf-lconn-line { background: rgba(34,197,94,.4); }
+.nf-lconn-dot {
+  position: absolute; right: calc(50% - 26px - 52px/2 + 0.75px); top: 0;
+  width: 7px; height: 7px; border-radius: 50%; transform: translateX(-50%);
+  background: var(--amber); box-shadow: 0 0 7px var(--amber);
+  animation: nfVTravel 380ms linear forwards;
+}
+@keyframes nfVTravel { from{top:0;opacity:1} to{top:calc(100% - 7px);opacity:.4} }
 
 /* ── WIP SECTION ── */
 .wip-section { margin-top: 48px; }
