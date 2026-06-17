@@ -11,20 +11,20 @@ export const metadata: Metadata = {
     shortcut: "/favicon.ico",
     apple: "/favicon.svg",
   },
-  title: "Revcore Labs — Digitalización para negocios reales",
+  title: "RLabs — Digitalización para negocios reales",
   description: "Hacemos el trabajo digital para que vos te enfoques en tu negocio. Landing pages, tiendas online y automatizaciones para PyMEs en Uruguay.",
   keywords: ["digitalización", "automatización", "landing page", "tienda online", "Shopify", "Uruguay", "PyMEs", "agencia digital"],
   openGraph: {
-    title: "Revcore Labs — Digitalización para negocios reales",
+    title: "RLabs — Digitalización para negocios reales",
     description: "Hacemos el trabajo digital para que vos te enfoques en tu negocio. Landing pages, tiendas online y automatizaciones para PyMEs en Uruguay.",
     type: "website",
     url: "https://revcorelabs.com",
-    siteName: "Revcore Labs",
+    siteName: "RLabs",
     locale: "es_UY",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Revcore Labs — Digitalización para negocios reales",
+    title: "RLabs — Digitalización para negocios reales",
     description: "Hacemos el trabajo digital para que vos te enfoques en tu negocio.",
   },
   metadataBase: new URL("https://revcorelabs.com"),
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
 const organizationSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  name: "Revcore Labs",
+  name: "RLabs",
   url: "https://revcorelabs.com",
   logo: "https://revcorelabs.com/logo.png",
   description:

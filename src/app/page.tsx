@@ -44,7 +44,7 @@ export default function Home() {
               <LogoIcon width={30} height={30} id="nav" />
               <div className="nav-logo-divider" />
               <div className="nav-logo-text">
-                <div className="nav-logo-wordmark">REVCORE <span>LABS</span></div>
+                <div className="nav-logo-wordmark">R<span>LABS</span></div>
                 <div className="nav-logo-tagline">Digitalización · Automatización</div>
               </div>
             </a>
@@ -459,10 +459,10 @@ export default function Home() {
             <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
               <LogoIcon width={22} height={22} id="footer" />
               <span style={{ fontFamily: "'Space Grotesk',sans-serif", fontSize: 13, fontWeight: 800, letterSpacing: ".12em", color: "var(--text-3)" }}>
-                REVCORE <span style={{ color: "var(--amber)", fontWeight: 600, letterSpacing: ".22em" }}>LABS</span>
+                R<span style={{ color: "var(--amber)", fontWeight: 600, letterSpacing: ".22em" }}>LABS</span>
               </span>
             </div>
-            <span className="footer-copy">© 2026 Revcore Labs — Uruguay</span>
+            <span className="footer-copy">© 2026 RLabs — Uruguay</span>
             <a href="https://wa.me/59894486143" target="_blank" rel="noopener noreferrer" className="footer-copy" style={{ transition: "color 150ms ease" }}>
               +598 94 486 143
             </a>
