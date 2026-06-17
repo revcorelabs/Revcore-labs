@@ -490,6 +490,31 @@ details[open] summary::after { transform: rotate(45deg); }
 .cta-final h2 { font-size: clamp(28px, 4vw, 48px); font-weight: 800; letter-spacing: -.02em; margin-bottom: 16px; }
 .cta-final p { font-size: 17px; color: var(--text-2); max-width: 480px; margin: 0 auto 40px; line-height: 1.7; }
 
+/* ── WIP SECTION ── */
+.wip-section { margin-top: 48px; }
+.wip-label {
+  font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--text-3); margin-bottom: 16px; display: flex; align-items: center; gap: 10px;
+}
+.wip-label::before, .wip-label::after {
+  content: ""; flex: 1; height: 1px; background: var(--border);
+}
+.wip-label::before { max-width: 32px; }
+.wip-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+.wip-card {
+  border: 1px solid var(--border); border-radius: 14px;
+  overflow: hidden; background: var(--bg-2); opacity: .85;
+}
+.wip-card-accent { height: 3px; }
+.wip-card-body { padding: 20px 24px 24px; }
+.wip-card-title { font-size: 17px; font-weight: 700; color: var(--text); margin: 10px 0 6px; }
+.wip-card-desc { font-size: 13px; color: var(--text-3); line-height: 1.6; }
+.wip-badge {
+  font-size: 10px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--text-3); background: var(--bg-3);
+  border: 1px solid var(--border); border-radius: 999px; padding: 2px 10px;
+}
+
 /* ── CONTACT FORM ── */
 .contact-wrap {
   max-width: 680px; margin: 0 auto;

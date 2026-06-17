@@ -92,10 +92,6 @@ export default function Home() {
                   <span className="hero-stat-num mono">24/7</span>
                   <p className="hero-stat-label">Tu presencia trabajando</p>
                 </div>
-                <div>
-                  <span className="hero-stat-num mono">0</span>
-                  <p className="hero-stat-label">Tecnicismos en nuestra comunicación</p>
-                </div>
               </div>
             </div>
 
@@ -348,25 +344,11 @@ export default function Home() {
             </ScrollReveal>
             <ScrollReveal delay={80}>
               <div className="case-card">
-                <div className="case-accent" style={{ background: "linear-gradient(90deg,#F59E0B,#FBBF24)" }} />
-                <div className="case-body">
-                  <div className="case-meta">
-                    <span className="case-tag">tienda shopify</span>
-                    <span className="case-status"><span className="case-status-dot" style={{ background: "#F59E0B" }} /><span style={{ color: "#F59E0B" }}>en desarrollo</span></span>
-                  </div>
-                  <div className="case-title">Maracuya</div>
-                  <p className="case-desc">Marca uruguaya de delantales personalizados. Tienda Shopify con catálogo completo, variantes de producto, pasarela de pagos y gestión de envíos lista para operar.</p>
-                  <span style={{ fontSize: 13, color: "var(--text-3)" }}>Próximamente</span>
-                </div>
-              </div>
-            </ScrollReveal>
-            <ScrollReveal delay={160}>
-              <div className="case-card">
                 <div className="case-accent" style={{ background: "linear-gradient(90deg,#A78BFA,#EC4899)" }} />
                 <div className="case-body">
                   <div className="case-meta">
                     <span className="case-tag">tienda shopify</span>
-                    <span className="case-status"><span className="case-status-dot" style={{ background: "#F59E0B" }} /><span style={{ color: "#F59E0B" }}>en desarrollo</span></span>
+                    <span className="case-status"><span className="case-status-dot" style={{ background: "#22C55E" }} /><span style={{ color: "#22C55E" }}>live</span></span>
                   </div>
                   <div className="case-title">Pepina</div>
                   <p className="case-desc">Marca de indumentaria femenina. Tienda Shopify con catálogo por temporada, variantes de color y talle, sistema de pagos integrado y experiencia de compra cuidada.</p>
@@ -377,6 +359,27 @@ export default function Home() {
               </div>
             </ScrollReveal>
           </div>
+
+          {/* Proyectos en curso */}
+          <ScrollReveal>
+            <div className="wip-section">
+              <div className="wip-label">proyectos en curso</div>
+              <div className="wip-grid">
+                <div className="wip-card">
+                  <div className="wip-card-accent" style={{ background: "linear-gradient(90deg,#F59E0B,#FBBF24)" }} />
+                  <div className="wip-card-body">
+                    <div className="case-meta">
+                      <span className="case-tag">tienda shopify</span>
+                      <span className="wip-badge">en construcción</span>
+                    </div>
+                    <div className="wip-card-title">Maracuya</div>
+                    <p className="wip-card-desc">Marca uruguaya de delantales personalizados. Tienda Shopify con catálogo completo, variantes de producto y pasarela de pagos.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ScrollReveal>
+
           <ScrollReveal>
             <a href={EMAIL} className="case-cta" style={{ marginTop: 20, display: "flex" }}>
               <div className="case-cta-icon"><svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 4v16m8-8H4" /></svg></div>
