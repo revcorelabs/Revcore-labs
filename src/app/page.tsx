@@ -71,13 +71,10 @@ export default function Home() {
           <div className="hero-grid">
             {/* Left */}
             <div>
-              <ScrollRevealText
-                className="hero-h1"
-                segments={[
-                  { text: "Hacemos el trabajo digital" },
-                  { text: "para que vos te enfoques en tu negocio.", amber: true },
-                ]}
-              />
+              <h1 className="hero-h1">
+                <span className="h1-plain">Hacemos el trabajo digital</span>
+                <em>para que vos te enfoques en tu negocio.</em>
+              </h1>
               <p className="hero-sub">
                 Tu negocio ya funciona. Lo que falta es que internet trabaje para vos. Páginas, tiendas y automatizaciones para empresas que quieren crecer.
               </p>

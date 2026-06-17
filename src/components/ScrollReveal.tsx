@@ -27,21 +27,22 @@ export default function ScrollReveal({ children, className = "", delay = 0, dire
     else if (direction === "right") el.style.transform = "translateX(40px)";
     else el.style.transform = "none";
 
+    const reveal = () => {
+      el.style.opacity = "1";
+      el.style.transform = "none";
+      observer.unobserve(el);
+    };
+
     const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            el.style.opacity = "1";
-            el.style.transform = "none";
-            observer.unobserve(el);
-          }
-        });
-      },
-      { threshold: 0.15 }
+      (entries) => { entries.forEach((e) => { if (e.isIntersecting) reveal(); }); },
+      { threshold: 0.08, rootMargin: "0px 0px -40px 0px" }
     );
 
+    // Safety fallback: always show content after 1.5s regardless
+    const fallback = setTimeout(reveal, 1500 + delay);
+
     observer.observe(el);
-    return () => observer.disconnect();
+    return () => { observer.disconnect(); clearTimeout(fallback); };
   }, [delay, direction]);
 
   return (

@@ -185,6 +185,13 @@ img { display: block; max-width: 100%; }
 }
 .hero-h1 .h1-plain {
   display: block;
+  animation: titleBlurIn 700ms var(--ease-out) 80ms both;
+}
+.hero-h1 em {
+  display: block;
+  font-style: normal;
+  color: var(--amber);
+  animation: titleBlurIn 700ms var(--ease-out) 220ms both, amberGlow 3.5s ease-in-out 1.4s infinite;
 }
 
 .hero-sub {
