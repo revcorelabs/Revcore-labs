@@ -3,6 +3,12 @@ import { useState } from "react";
 
 const WEBHOOK = "https://n8n.revcorelabs.com/webhook/contacto-revcore";
 
+// Token que n8n va a verificar. Sin él, el webhook rechaza el request.
+// Aunque este token sea visible en el código del browser, igual funciona
+// como filtro: bots genéricos no lo tienen, y requiere conocer tu sitio
+// específicamente para abusar del webhook.
+const WEBHOOK_TOKEN = process.env.NEXT_PUBLIC_WEBHOOK_TOKEN ?? "";
+
 type Status = "idle" | "loading" | "success" | "error";
 
 export default function ContactForm() {
@@ -20,7 +26,10 @@ export default function ContactForm() {
     try {
       const res = await fetch(WEBHOOK, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "x-webhook-token": WEBHOOK_TOKEN,
+        },
         body: JSON.stringify(form),
       });
       setStatus(res.ok ? "success" : "error");

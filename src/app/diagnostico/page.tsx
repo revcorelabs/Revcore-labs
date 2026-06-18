@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 const N8N_WEBHOOK = "https://n8n.revcorelabs.com/webhook/diagnostico-lead";
+const WEBHOOK_TOKEN = process.env.NEXT_PUBLIC_WEBHOOK_TOKEN ?? "";
 
 type FormData = {
   nombre: string;
@@ -112,7 +113,10 @@ export default function DiagnosticoPage() {
     try {
       await fetch(N8N_WEBHOOK, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "x-webhook-token": WEBHOOK_TOKEN,
+        },
         body: JSON.stringify(payload),
       });
     } catch {
