@@ -263,6 +263,142 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── CÓMO FUNCIONA UNA AUTOMATIZACIÓN ── */}
+      <section className="section" id="como-funciona">
+        <div className="container">
+          <div className="section-head">
+            <ScrollReveal>
+              <div className="section-label" style={{ justifyContent: "center" }}>cómo funciona</div>
+              <h2>Una automatización en 3 pasos</h2>
+              <p>No es magia, es lógica. Algo ocurre, el sistema reacciona, vos no hacés nada.</p>
+            </ScrollReveal>
+          </div>
+
+          {/* 3 pasos */}
+          <div className="auto-steps-row">
+            {[
+              {
+                num: "01", tag: "// trigger", title: "Algo ocurre",
+                desc: "Un cliente llena un formulario, hace una reserva, manda un mensaje. Ese evento dispara el flujo.",
+                icon: <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>,
+              },
+              {
+                num: "02", tag: "// workflow", title: "El sistema actúa",
+                desc: "En menos de un segundo, el flujo ya corrió: guardó el dato, mandó el email, actualizó la planilla.",
+                icon: <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>,
+              },
+              {
+                num: "03", tag: "// resultado", title: "Vos te liberás",
+                desc: "El cliente fue atendido, el dato quedó guardado y el negocio siguió. Todo sin que hicieras nada.",
+                icon: <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>,
+              },
+            ].map((step, i) => (
+              <ScrollReveal key={step.num} delay={i * 100}>
+                <div className="auto-step-card">
+                  <div className="auto-step-num">{step.num}</div>
+                  <div className="auto-step-icon">{step.icon}</div>
+                  <div className="auto-step-tag">{step.tag}</div>
+                  <div className="auto-step-title">{step.title}</div>
+                  <p className="auto-step-desc">{step.desc}</p>
+                </div>
+                {i < 2 && <div className="auto-step-arrow">→</div>}
+              </ScrollReveal>
+            ))}
+          </div>
+
+          {/* Caso: Reservas Online */}
+          <ScrollReveal>
+            <div className="auto-case-wrap">
+              <div className="auto-case-label">
+                <div className="section-label">caso de uso</div>
+                <h3 className="auto-case-title">Reservas en un restaurante o local de servicios</h3>
+                <p className="auto-case-sub">El mismo proceso que antes requería llamadas, libreta y acordarse de confirmar. Ahora corre solo.</p>
+              </div>
+
+              <div className="before-after-grid">
+                {/* Antes */}
+                <div className="ba-card ba-before">
+                  <div className="ba-header">
+                    <span className="ba-badge ba-badge-before">Sin automatizar</span>
+                  </div>
+                  <div className="ba-list">
+                    {[
+                      "Cliente llama: si no atendés, la reserva se pierde",
+                      "Anotás a mano en una libreta o papel",
+                      "Dependés de acordarte de confirmar",
+                      "Sin recordatorio → el cliente no aparece",
+                      "Perdés tiempo gestionando en lugar de atender",
+                    ].map((item, i) => (
+                      <div key={i} className="ba-item ba-item-before">
+                        <span className="ba-item-icon">✕</span>
+                        <span>{item}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Después */}
+                <div className="ba-card ba-after">
+                  <div className="ba-header">
+                    <span className="ba-badge ba-badge-after">Con automatización</span>
+                  </div>
+                  <div className="ba-flow">
+                    {[
+                      { label: "Cliente completa formulario online (24/7)", type: "step" },
+                      { label: "→", type: "arrow" },
+                      { label: "Confirmación automática por email o WhatsApp", type: "step" },
+                      { label: "→", type: "arrow" },
+                      { label: "Datos guardados en tu planilla al instante", type: "step" },
+                      { label: "→", type: "arrow" },
+                      { label: "Recordatorio automático 24 hs antes", type: "step" },
+                    ].map((item, i) =>
+                      item.type === "arrow"
+                        ? <div key={i} className="ba-flow-arrow">↓</div>
+                        : <div key={i} className="ba-item ba-item-after">
+                            <span className="ba-item-icon">✓</span>
+                            <span>{item.label}</span>
+                          </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              {/* Métricas */}
+              <div className="auto-metrics">
+                {[
+                  { val: "0", label: "llamadas perdidas" },
+                  { val: "< 1s", label: "tiempo de respuesta" },
+                  { val: "24/7", label: "disponible para reservar" },
+                ].map((m) => (
+                  <div key={m.val} className="auto-metric">
+                    <span className="auto-metric-val mono">{m.val}</span>
+                    <span className="auto-metric-label">{m.label}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </ScrollReveal>
+
+          {/* CTA demo */}
+          <ScrollReveal>
+            <div className="auto-demo-cta">
+              <div className="section-label" style={{ justifyContent: "center", marginBottom: 12 }}>demo interactiva</div>
+              <p className="auto-demo-cta-text">
+                ¿Querés ver exactamente qué pasa por adentro cuando llega una reserva?
+              </p>
+              <a href="/demo-automatizacion" className="btn btn-primary auto-demo-btn">
+                <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                Probá cómo funciona en tiempo real
+              </a>
+              <p className="auto-demo-hint">Formulario simulado, sin datos reales. Ves el flujo completo corriendo.</p>
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
+
       {/* ── PROCESO ── */}
       <section className="section" id="proceso">
         <div className="container">
