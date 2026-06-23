@@ -379,21 +379,25 @@ export default function Home() {
             </div>
           </ScrollReveal>
 
-          {/* CTA demo */}
+          {/* Utopía — demo real de automatización */}
           <ScrollReveal>
             <div className="auto-demo-cta">
-              <div className="section-label" style={{ justifyContent: "center", marginBottom: 12 }}>demo interactiva</div>
+              <div className="section-label" style={{ justifyContent: "center", marginBottom: 12 }}>demo real</div>
               <p className="auto-demo-cta-text">
-                ¿Querés ver exactamente qué pasa por adentro cuando llega una reserva?
+                Construimos <strong style={{ color: "var(--text)" }}>Utopía</strong>, un restaurante de alta gama ficticio, para mostrar exactamente cómo funciona este flujo en producción.
               </p>
-              <a href="/demo-automatizacion" className="btn btn-primary auto-demo-btn">
-                <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                Probá cómo funciona en tiempo real
-              </a>
-              <p className="auto-demo-hint">Formulario simulado, sin datos reales. Ves el flujo completo corriendo.</p>
+              <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap", marginTop: 4 }}>
+                <a href="/utopia" target="_blank" rel="noopener noreferrer" className="btn btn-primary auto-demo-btn">
+                  <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                  Ver Utopía en vivo
+                </a>
+                <a href="/demo-automatizacion" className="btn btn-outline auto-demo-btn">
+                  Ver flujo técnico →
+                </a>
+              </div>
+              <p className="auto-demo-hint">Sitio demo con reservas conectadas a n8n — confirmación, recordatorio y feedback automatizados.</p>
             </div>
           </ScrollReveal>
         </div>
@@ -468,6 +472,22 @@ export default function Home() {
                   <p className="case-desc">Marca de indumentaria femenina. Tienda Shopify con catálogo por temporada, variantes de color y talle, sistema de pagos integrado y experiencia de compra cuidada.</p>
                   <a href="https://pepina.uy" target="_blank" rel="noopener noreferrer" className="case-link">
                     Ver sitio <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                  </a>
+                </div>
+              </div>
+            </ScrollReveal>
+            <ScrollReveal delay={160}>
+              <div className="case-card">
+                <div className="case-accent" style={{ background: "linear-gradient(90deg,#C9A84C,#F0ECE4)" }} />
+                <div className="case-body">
+                  <div className="case-meta">
+                    <span className="case-tag">automatización</span>
+                    <span className="case-status"><span className="case-status-dot" style={{ background: "#F59E0B" }} /><span style={{ color: "#F59E0B" }}>demo</span></span>
+                  </div>
+                  <div className="case-title">Utopía</div>
+                  <p className="case-desc">Restaurante de alta gama ficticio. Sistema de reservas online con confirmación automática, recordatorio 24 hs antes y encuesta de feedback post-visita — todo sin intervención humana.</p>
+                  <a href="/utopia" target="_blank" rel="noopener noreferrer" className="case-link">
+                    Ver demo <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
                   </a>
                 </div>
               </div>

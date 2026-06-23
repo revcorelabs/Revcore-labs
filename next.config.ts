@@ -65,6 +65,15 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  async redirects() {
+    return [
+      {
+        source: "/utopia",
+        destination: "/utopia/index.html",
+        permanent: false,
+      },
+    ];
+  },
   async headers() {
     return [
       {
