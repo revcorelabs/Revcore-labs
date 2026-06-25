@@ -492,6 +492,22 @@ export default function Home() {
                 </div>
               </div>
             </ScrollReveal>
+            <ScrollReveal delay={240}>
+              <div className="case-card">
+                <div className="case-accent" style={{ background: "linear-gradient(90deg,#1E293B,#64748B)" }} />
+                <div className="case-body">
+                  <div className="case-meta">
+                    <span className="case-tag">landing page</span>
+                    <span className="case-status"><span className="case-status-dot" style={{ background: "#22C55E" }} /><span style={{ color: "#22C55E" }}>live</span></span>
+                  </div>
+                  <div className="case-title">Bosch Reflect</div>
+                  <p className="case-desc">Estudio de detailing premium en Parque Batlle, Montevideo. Landing page con catálogo de servicios, galería de trabajos y contacto directo por WhatsApp para agendar turnos.</p>
+                  <a href="https://boschreflect.com" target="_blank" rel="noopener noreferrer" className="case-link">
+                    Ver sitio <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                  </a>
+                </div>
+              </div>
+            </ScrollReveal>
           </div>
 
           {/* Proyectos en curso */}
