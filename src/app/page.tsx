@@ -192,25 +192,30 @@ export default function Home() {
             <ScrollReveal>
               <div className="section-label" style={{ justifyContent: "center" }}>servicios</div>
               <h2>Lo que construimos</h2>
-              <p>Tres servicios concretos para llevar tu negocio a internet y hacerlo trabajar solo.</p>
+              <p>Cuatro servicios concretos para llevar tu negocio a internet y hacerlo trabajar solo.</p>
             </ScrollReveal>
           </div>
           <div className="services-grid">
             {[
               {
-                delay: 0, title: "Landing Pages", tag: "// más pedido", termTitle: "Landing Page",
+                delay: 0, title: "Landing Pages", tag: "// más pedido", termTitle: "Landing Page", cta: "Consultá", destacado: false,
                 price: "desde USD 250", icon: <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>,
                 desc: "Tu negocio en internet en menos de una semana. Página profesional, clara y con formulario de contacto para que los clientes te encuentren — y te elijan.",
               },
               {
-                delay: 80, title: "Tiendas Online", tag: "// shopify", termTitle: "Tienda Online",
+                delay: 80, title: "Tiendas Online", tag: "// shopify", termTitle: "Tienda Online", cta: "Consultá", destacado: false,
                 price: "desde USD 700", icon: <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 7H4l1-7z" /></svg>,
                 desc: "Vendé tus productos las 24 horas, todos los días. Tienda completa con catálogo, pagos y gestión de pedidos lista para operar desde el día uno.",
               },
               {
-                delay: 160, title: "Automatizaciones", tag: "// IA + n8n", termTitle: "Automatización",
+                delay: 160, title: "Automatizaciones", tag: "// IA + n8n", termTitle: "Automatización", cta: "Consultá", destacado: false,
                 price: "desde USD 100", icon: <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>,
                 desc: "Identificamos qué tareas repetitivas te roban tiempo y construimos la solución. Cada hora que liberás es una hora que podés invertir en crecer.",
+              },
+              {
+                delay: 240, title: "Software a Medida", tag: "// sistemas propios", termTitle: "Software a Medida", cta: "Hablemos", destacado: true,
+                price: "según el proyecto", icon: <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M10 20l4-16M6 16l-4-4 4-4M18 8l4 4-4 4" /></svg>,
+                desc: "Cuando lo que tu negocio necesita no viene hecho. Reservas, agenda, stock, presupuestos, cobros: lo construimos con tus reglas y tu forma de trabajar.",
               },
             ].map((s) => (
               <ScrollReveal key={s.title} delay={s.delay}>
@@ -226,8 +231,8 @@ export default function Home() {
                     <p className="service-desc">{s.desc}</p>
                   </div>
                   <div className="service-footer">
-                    <span className="service-price">{s.price}</span>
-                    <a href={EMAIL} className="service-link">Consultá →</a>
+                    <span className={s.destacado ? "service-price service-price-custom" : "service-price"}>{s.price}</span>
+                    <a href={EMAIL} className="service-link">{s.cta} →</a>
                   </div>
                 </div>
               </ScrollReveal>
