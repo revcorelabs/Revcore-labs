@@ -443,6 +443,72 @@ export default function Home() {
               <p>Proyectos reales, para negocios reales en Uruguay.</p>
             </ScrollReveal>
           </div>
+          {/* Caso destacado — Bosch Reflect, sistema de gestión */}
+          <ScrollReveal>
+            <div className="feat-case">
+              <div className="feat-accent" />
+              <div className="feat-grid">
+                <div className="feat-body">
+                  <div className="feat-meta">
+                    <span className="case-tag">software a medida</span>
+                    <span className="case-status"><span className="case-status-dot" style={{ background: "#22C55E" }} /><span style={{ color: "#22C55E" }}>en producción</span></span>
+                  </div>
+
+                  <h3>El sistema que maneja<br />un taller entero</h3>
+                  <p className="feat-kicker">Bosch Reflect · Detailing automotriz · Montevideo</p>
+
+                  <p className="feat-desc">Turnos en un cuaderno, presupuestos escritos a mano y las cuentas del mes en la cabeza. Construimos el software que hoy usan los dos socios todos los días: <b>agenda del taller, clientes y vehículos, presupuestos que se mandan por WhatsApp y las finanzas completas</b> — en pesos y en dólares, sin mezclarlos.</p>
+
+                  <div className="feat-stats">
+                    <div className="feat-stat"><div className="feat-stat-v">8 días</div><div className="feat-stat-l">de cero a producción</div></div>
+                    <div className="feat-stat"><div className="feat-stat-v">13</div><div className="feat-stat-l">módulos conectados</div></div>
+                    <div className="feat-stat"><div className="feat-stat-v">100 %</div><div className="feat-stat-l">del taller, adentro</div></div>
+                  </div>
+
+                  <div className="feat-pills">
+                    {["agenda y calendario", "presupuestos por WhatsApp", "finanzas UYU + USD", "clientes y vehículos", "control de insumos", "funciona en el celular"].map((t) => (
+                      <span key={t} className="feat-pill">{t}</span>
+                    ))}
+                  </div>
+
+                  <div className="feat-quote">
+                    <p><b>No lo entregamos y nos fuimos.</b> Somos socios del taller y usamos este sistema todos los días. Lo que molesta, lo arreglamos esa semana.</p>
+                  </div>
+                </div>
+
+                <div className="feat-shot">
+                  <p className="feat-shot-cap">La pantalla de inicio</p>
+                  <div className="ph">
+                    <div className="ph-top"><span className="ph-h">Buen día, Tomás</span><span className="ph-d">lun 22 sep</span></div>
+
+                    <div className="ph-money">
+                      <div className="ph-m"><div className="ph-m-lab">Falta cobrar</div><div className="ph-m-val" style={{ color: "#C9A84C" }}>$ 48.500</div></div>
+                      <div className="ph-m"><div className="ph-m-lab">Por pagar</div><div className="ph-m-val" style={{ color: "#C4635A" }}>$ 12.300</div></div>
+                    </div>
+
+                    <div className="ph-sec">Hoy en el taller</div>
+                    <div className="ph-row">
+                      <span className="ph-bar" style={{ background: "#C9A84C" }} />
+                      <span><span className="ph-t">Amarok · Pulido + cerámico</span><span className="ph-s">entra 9:00</span></span>
+                      <span className="ph-tag" style={{ background: "rgba(201,168,76,.14)", color: "#C9A84C", border: "1px solid rgba(201,168,76,.3)" }}>entra</span>
+                    </div>
+                    <div className="ph-row">
+                      <span className="ph-bar" style={{ background: "#5FBF7F" }} />
+                      <span><span className="ph-t">Corolla · Lavado premium</span><span className="ph-s">sale 17:00</span></span>
+                      <span className="ph-tag" style={{ background: "rgba(34,197,94,.12)", color: "#5FBF7F", border: "1px solid rgba(34,197,94,.25)" }}>sale</span>
+                    </div>
+
+                    <div className="ph-nav">
+                      {[["Inicio", true], ["Agenda", false], ["Trabajos", false], ["Clientes", false], ["Finanzas", false]].map(([t, on]) => (
+                        <span key={t as string} className={on ? "ph-nav-i on" : "ph-nav-i"}><span className="ph-ic" />{t}</span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ScrollReveal>
+
           <div className="cases-grid">
             <ScrollReveal delay={0}>
               <div className="case-card">
